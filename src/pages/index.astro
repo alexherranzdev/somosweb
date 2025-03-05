@@ -49,7 +49,6 @@ const awards = [
 
 <Layout
 	title="Home">
-	<HomeAwardsReact awards={awards} client:load />
 	<HomeHero
 		projects={projects}
 	/>
@@ -65,6 +64,7 @@ const awards = [
 	<HomeClients />
 	<HomeCoreValues />
 	<HomeVideo />
+	<HomeAwardsReact awards={awards} client:load />
 	{ false && (
 		<HomeAwards awards={awards} />
 	)}

@@ -20,9 +20,9 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
   const circlesRef = useRef<Matter.Body[]>([])
 
   const handleClickAward = (award: Award) => {
-    if (currentAward !== null) {
+    if (currentAward !== null && currentAward.id !== award.id) {
       const currentAwardIndex = awards.findIndex((a) => a.id === currentAward.id)
-      Matter.Body.scale(circlesRef.current[currentAwardIndex], 0.5, 0.5)
+      Matter.Body.scale(circlesRef.current[currentAwardIndex], .53, .53)
     }
     setCurrentAward(award)
   }
@@ -32,6 +32,11 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
       setCurrentAward(awards[0])
     }
   }, [awards])
+  
+  useEffect(() => {
+    if (currentAward === null) return
+    Matter.Body.scale(circlesRef.current[currentAward.id - 1], 1.8, 1.8)
+  }, [currentAward])
 
   useEffect(() => {
     if (!matterContainerRef.current) return
@@ -39,7 +44,7 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
     const { Engine, Render, Runner, Composite, Bodies, Mouse, MouseConstraint } = Matter
 
     const background = "#121212"
-    const height = 800
+    const height = 600
     const element = matterContainerRef.current
 
     // Crear el motor de Matter.js
@@ -69,8 +74,8 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
     let totalCircles = 0
     const totalCirclePerSize = {
       0: 8,
-      960: 22,
-      1280: 30
+      960: 12,
+      1280: 20
     }
   
     const currentWindowWidth = window.innerWidth
@@ -92,11 +97,11 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
   
       const circle = Bodies.circle(
         Math.random() * window.innerWidth, 
-        Math.random() * height / 2, 
+        Math.random() * height, 
         size / 2,
         {
           restitution: 0.8,
-          friction: 0.3,
+          friction: 0,
           label: `circle-${index + 1}`,
           render: {
             fillStyle: "rgba(255, 255, 255)",
@@ -116,7 +121,7 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
       Bodies.rectangle(element.clientWidth / 2, height - 25, element.clientWidth, 10, { isStatic: true, render: { fillStyle: background } }),
       Bodies.rectangle(element.clientWidth / 2, 0, element.clientWidth, 10, { isStatic: true, render: { fillStyle: background } }),
       Bodies.rectangle(0, height / 2, 10, height, { isStatic: true, render: { fillStyle: background } }),
-      Bodies.rectangle(element.clientWidth, height / 2 + 2, 10, height, { isStatic: true, render: { fillStyle: background } })
+      Bodies.rectangle(element.clientWidth, height / 2 + 2, 19, height, { isStatic: true, render: { fillStyle: background } })
     ])
 
     // Agregar control de ratón
@@ -171,7 +176,7 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
                 <li key={year}>{year}</li>
               ))}
             </ul>
-            <p className='award-description'>{currentAward.description}</p>
+            <p className='award-description mt-4'>El reconocimiento a nuestro trabajo nos impulsa a seguir creando experiencias inolvidables. A lo largo de los años, hemos recibido premios que avalan nuestra creatividad, innovación y compromiso con la excelencia. Cada galardón es un reflejo de la pasión que ponemos en cada proyecto.</p>
           </article>
         )}
       </div>
