@@ -1,0 +1,21 @@
+---
+const {
+  title,
+  href,
+  isActive = false
+} = Astro.props
+---
+<a href={href} class={`${isActive ? "is-active" : ""} py-3 px-1 flex items-center text-black`}>
+  {title}
+  <slot />
+</a>
+<style>
+  .is-active::before {
+    content: "[";
+    padding-inline: 0.2rem;
+  }
+  .is-active::after {
+    content: "]";
+    padding-inline: 0.2rem;
+  }
+</style>

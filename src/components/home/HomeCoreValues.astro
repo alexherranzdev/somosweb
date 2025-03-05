@@ -1,0 +1,49 @@
+<section class="py-20 px-4 bg-[#121212]" id="values">
+  <ul class="px-9 [&>li]:flex-col md:[&>li]:flex-row [&>li]:gap-y-9 md:[&>li]:gap-x-9">
+    <li class="flex items-center pb-16">
+      <div class="text-gray-400 font-light text-xl">[01]</div>
+      <div class="text-3xl md:text-6xl font-semibold text-white">Security</div>
+      <div class="text-gray-400 font-light text-xl ml-auto max-w-xl">
+        Netus sapien consectetur dictumol viverra pellentesque urna tellusarcu nunc sed amet tellus nequeol mi aliquam tincidunt ultrices.
+      </div>
+    </li>
+    <li class="flex items-center border-t border-gray-800 border-solid py-16">
+      <div class="text-gray-400 font-light text-xl">[02]</div>
+      <div class="text-3xl md:text-6xl font-semibold text-white">Sustainability</div>
+      <div class="text-gray-400 font-light text-xl ml-auto max-w-xl">
+        Netus sapien consectetur dictumol viverra pellentesque urna tellusarcu nunc sed amet tellus nequeol mi aliquam tincidunt ultrices.
+      </div>
+    </li>
+    <li class="flex items-center border-t border-gray-800 border-solid py-16">
+      <div class="text-gray-400 font-light text-xl">[03]</div>
+      <div class="text-3xl md:text-6xl font-semibold text-white">Trust</div>
+      <div class="text-gray-400 font-light text-xl ml-auto max-w-xl">
+        Netus sapien consectetur dictumol viverra pellentesque urna tellusarcu nunc sed amet tellus nequeol mi aliquam tincidunt ultrices.
+      </div>
+    </li>
+  </ul>
+</section>
+
+<script>
+  document.addEventListener("scroll", () => {
+    const valuesSection = document.getElementById("values");
+    const main = document.getElementById("main");
+    if (!valuesSection || !main) return;
+
+    const rect = valuesSection.getBoundingClientRect();
+    const startPoint = 250
+    const triggerPoint = 30
+
+
+    if (rect.top < startPoint && rect.top > triggerPoint) {
+      const progress = Math.max(0, 1 - (rect.top / startPoint));
+      const whiteToDark = Math.floor(255 - (255 - 18) * progress);
+      main.style.backgroundColor = `rgb(${whiteToDark}, ${whiteToDark}, ${whiteToDark})`;
+
+    } else if (rect.top <= triggerPoint){
+      main.style.backgroundColor = "#121212";
+    } else {
+      main.style.backgroundColor = "#FFFFFF"
+    }
+});
+</script>

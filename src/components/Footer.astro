@@ -1,0 +1,52 @@
+---
+import BCorp from "./icons/BCorp.astro";
+
+---
+
+<footer class="bg-black text-white px-4 py-9 ">
+  <div class="flex flex-col md:flex-row justify-between">
+    <div class="max-w-2xl">
+      <h4 class="text-5xl font-semibold">Stay connected! Share your email, and we'll be in touch.</h4>
+    </div>
+    <div class="grid grid-cols-2 gap-x-12 gap-y-12 uppercase">
+      <div class="flex flex-col gap-y-3">
+        <a href="" class="hover:opacity-70 transition-all">Home</a>
+        <a href="" class="hover:opacity-70 transition-all">Projects</a>
+        <a href="" class="hover:opacity-70 transition-all">Services</a>
+        <a href="" class="hover:opacity-70 transition-all">Contact</a>
+      </div>
+
+      <div class="flex flex-col gap-y-3">
+        <a href="" class="hover:opacity-70 transition-all">Madrid</a>
+        <a href="" class="hover:opacity-70 transition-all">Barcelona</a>
+        <a href="" class="hover:opacity-70 transition-all">Bilbao</a>
+        <a href="" class="hover:opacity-70 transition-all">Málaga</a>
+      </div>
+
+      <div class="flex flex-col gap-y-2">
+        <BCorp />
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col md:flex-row justify-between mt-8 items-end">
+    <ul class="flex flex-col gap-y-4 text-2xl font-semibold">
+      <li>
+        <a href="/" class="hover:opacity-70 transition-all">Instagram</a>
+      </li>
+      <li>
+        <a href="/" class="hover:opacity-70 transition-all">Vimeo</a>
+      </li>
+      <li>
+        <a href="/" class="hover:opacity-70 transition-all">Linkedin</a>
+      </li>
+    </ul>
+
+    <div class="flex gap-x-5 items-end justify-end">
+      <ul class="flex divide-x-1 divide-solid divide-[#999] gap-x-2">
+        <li><a href="/" class="text-[#999] hover:opacity-70 text-sm pr-2 transition-all">Terms & Conditions</a></li>
+        <li><a href="/" class="text-[#999] hover:opacity-70 text-sm pr-2 transition-all">Privacy Policy</a></li>
+      </ul>
+      <span class="text-[#999] text-sm">&copy; 2025 Somos Experiences</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,26 @@
+---
+import Logo from "./icons/Logo.astro";
+import ArrowRightTop from "./icons/ArrowRightTop.astro";
+import Navigation from "./Navigation.astro";
+import PrimaryButton from "./PrimaryButton.astro";
+---
+
+<!-- Logo separado del Header -->
+<div class="fixed top-5 left-5 z-50 mix-blend-difference">
+  <Logo />
+</div>
+
+<header class="fixed top-0 left-0 w-full flex items-center justify-between px-8 py-4 bg-transparent z-40">
+  <!-- Navigation centrado -->
+  <nav class="absolute left-1/2 transform -translate-x-1/2">
+    <Navigation />
+  </nav>
+
+  <!-- Botón de contacto alineado a la derecha -->
+  <div class="ml-auto hidden lg:block">
+    <PrimaryButton>
+      Hire us
+      <ArrowRightTop />
+    </PrimaryButton>
+  </div>
+</header>

@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getProjects } from '../lib/api';
+import HomeHero from '../components/home/HomeHero.astro';
+import HomeProjects from '../components/home/HomeProjects.astro';
+import HomeData from '../components/home/HomeData.astro';
+import HomeServices from '../components/home/HomeServices.astro';
+import HomeClients from '../components/home/HomeClients.astro';
+import HomeCoreValues from '../components/home/HomeCoreValues.astro';
+import HomeVideo from '../components/home/HomeVideo.astro';
+import HomeAwards from '../components/home/HomeAwardsNew.astro';
+import HomeAwardsReact from '../components/home/HomeAwardsReact.tsx';
+
+const projects = await getProjects()
+const latestProjects = projects.length ? projects.slice(0, 3) : []
+const featuredProjects = projects.length ? projects.slice(3, 6) : []
+
+const awards = [
+{
+		id: 1,
+    title: "Award 1",
+    image: "/images/project-1.jpeg",
+		years: ['2019', '2020', '2024'],
+		description: 'sadfafas'
+  },
+  {
+		id: 2,
+    title: "Award 2",
+    image: "/images/project-1.jpeg",
+		years: ['2020', '2021', '2024'],
+		description: 'sadfafas'
+  },
+  {
+		id: 3,
+    title: "Award 3",
+    image: "/images/project-1.jpeg",
+		years: ['2017', '2020', '2023'],
+		description: 'sadfafas'
+  },
+  {
+		id: 4,
+    title: "Award 4",
+    image: "/images/project-1.jpeg",
+		years: ['2020', '2024', '2025'],
+		description: 'sadfafas'
+  }
+]
+---
+
+<Layout
+	title="Home">
+	<HomeAwardsReact awards={awards} client:load />
+	<HomeHero
+		projects={projects}
+	/>
+
+	{(
+		<HomeProjects
+			latestProjects={latestProjects}
+			featuredProjects={featuredProjects} />
+	)}
+
+	<HomeData />
+	<HomeServices />
+	<HomeClients />
+	<HomeCoreValues />
+	<HomeVideo />
+	{ false && (
+		<HomeAwards awards={awards} />
+	)}
+</Layout>

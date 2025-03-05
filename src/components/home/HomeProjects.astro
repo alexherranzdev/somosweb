@@ -1,0 +1,49 @@
+---
+import ArrowRightTop from "../icons/ArrowRightTop.astro";
+import PrimaryButton from "../PrimaryButton.astro";
+import ProjectCard from "../ProjectCard.astro";
+import SectionTitle from "../SectionTitle.astro";
+
+const {
+  latestProjects,
+  featuredProjects
+} = Astro.props;
+
+if (!latestProjects.length && !featuredProjects.length) {
+  return
+}
+---
+
+<section class="py-20 px-4">
+  <header class="flex justify-between">
+    <SectionTitle title="Our Portfolio" />
+    <PrimaryButton href="/projects">
+      See more
+      <ArrowRightTop />
+    </PrimaryButton>
+  </header>
+
+  { latestProjects.length && (
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mt-11">
+      { latestProjects.map(project => <ProjectCard
+        tags={project.tags}
+        title={project.title}
+        description={project.description}
+        shortDescription={project.shortDescription}
+        image={project.image}
+        link={project.link} />)}
+    </div>
+  )}
+
+  { featuredProjects.length && (
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 mt-11">
+      { featuredProjects.map(project => <ProjectCard
+        tags={project.tags}
+        title={project.title}
+        description={project.description}
+        shortDescription={project.shortDescription}
+        image={project.image}
+        link={project.link} />)}
+    </div>
+  )}
+</section>
