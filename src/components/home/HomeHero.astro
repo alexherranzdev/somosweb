@@ -1,7 +1,7 @@
 ---
 import HeroProjectCard from "../HeroProjectCard.astro"
 
-const projects = [
+const projectsMock = [
   {
     title: 'THE KITCHEN BY HERMÈS',
     link: 'https://somosexperiences.com/the-kitchen-by-hermes',
@@ -39,15 +39,24 @@ const projects = [
     position: 'left'
   }
 ]
+
+const {
+  projects
+} = Astro.props;
+
+let projectsToShow = projects
+if (!projects.length) {
+  projectsToShow = projectsMock
+}
 ---
 
 <section class="bg-black h-dvh w-full relative overflow-hidden flex flex-col items-center justify-center">
-  {projects.length && projects.map((project, index) => (
+  {projectsToShow.length && projectsToShow.map((project, index) => (
     <HeroProjectCard
       project={project}
       position={project.position}
       key={index}  />
   ))}
-  <p class="text-white mix-blend-difference text-6xl uppercase text-center z-20">More than events...<br />Experiences that connect</p>
+  <p class="text-white mix-blend-difference lg:text-6xl uppercase text-center z-20 text-4xl">More than events...<br />Experiences that connect</p>
   <p class="hidden xl:block absolute bottom-4 left-4 uppercase text-[#999999]">Scroll for more</p>
 </section>
