@@ -10,6 +10,7 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@astrojs/node": "^9.1.2",
     "@astrojs/react": "^4.2.0",
     "@fontsource/space-grotesk": "^5.1.1",
     "@tailwindcss/vite": "^4.0.6",

@@ -1,15 +1,15 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { getProjects } from "../lib/api";
-import HomeHero from "../components/home/HomeHero.astro";
-import HomeProjects from "../components/home/HomeProjects.astro";
-import HomeData from "../components/home/HomeData.astro";
-import HomeServices from "../components/home/HomeServices.astro";
-import HomeClients from "../components/home/HomeClients.astro";
-import HomeCoreValues from "../components/home/HomeCoreValues.astro";
-import HomeVideo from "../components/home/HomeVideo.astro";
-import HomeAwards from "../components/home/HomeAwardsNew.astro";
-import HomeAwardsReact from "../components/home/HomeAwardsReact.tsx";
+import Layout from "@layouts/Layout.astro";
+import { getProjects } from "../../lib/api";
+import HomeHero from "@components/home/HomeHero.astro";
+import HomeProjects from "@components/home/HomeProjects.astro";
+import HomeData from "@components/home/HomeData.astro";
+import HomeServices from "@components/home/HomeServices.astro";
+import HomeClients from "@components/home/HomeClients.astro";
+import HomeCoreValues from "@components/home/HomeCoreValues.astro";
+import HomeVideo from "@components/home/HomeVideo.astro";
+import HomeAwards from "@components/home/HomeAwardsNew.astro";
+import HomeAwardsReact from "@components/home/HomeAwardsReact.tsx";
 
 const projects = await getProjects();
 const latestProjects = projects.length ? projects.slice(0, 3) : [];
@@ -53,7 +53,7 @@ const awards = [
   {
     (
       <HomeProjects
-        title="Our Portfolio"
+        title="Nuestro portfolio"
         latestProjects={latestProjects}
         featuredProjects={featuredProjects}
       />

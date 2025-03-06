@@ -4,3 +4,15 @@
   --color-primary: #99e9eb;
   --font-sans: "Space Grotesk", sans-serif;
 }
+:root {
+  color-scheme: light only;
+  --body-bg: #fff;
+  --text-color: #000;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --body-bg: #000;
+    --text-color: #fff;
+  }
+} */

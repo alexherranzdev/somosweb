@@ -1,0 +1,179 @@
+---
+import ArticleData from "../../components/ArticleData.astro";
+import ArticleDobleImage from "../../components/ArticleDobleImage.astro";
+import ArticleTitleText from "../../components/ArticleTitleText.astro";
+import PlayIcon from "../../components/icons/PlayIcon.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getProject, getProjects, getCategories } from "../../lib/api";
+
+const { id } = Astro.params;
+const project = await getProject(id);
+const categories = await getCategories();
+const projects = await getProjects();
+
+const blockText = {
+  title: "Experience strategy",
+  subtitle: "Challenge",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.",
+};
+
+if (!project) {
+  throw new Error(`Proyecto no encontrado para el ID: ${id}`);
+}
+---
+
+<Layout title={project.title}>
+  <article class="mt-32 md:mt-52 px-4">
+    <div class="flex flex-col md:flex-row mt-8 gap-y-8 md:gap-x-4">
+      <div class="flex flex-col flex-1 order-2">
+        <h1 class="text-6xl md:text-8xl font-semibold mb-6">{project.title}</h1>
+        <ul class="flex gap-x-1 uppercase text-[#808080] text-sm mb-8">
+          {project.tags.map((tag) => <li>#{tag}</li>)}
+        </ul>
+        <section class="relative">
+          <img
+            src={project.image}
+            alt={project.title}
+            class="aspect-video object-cover rounded-4xl w-full"
+          />
+          <button
+            type="button"
+            class="absolute left-1/2 top-1/2 -translate-1/2 transition-all ease-out duration-300 cursor-pointer hover:scale-150 bg-white rounded-full h-14 w-14 flex items-center justify-center hover:bg-primary"
+          >
+            <PlayIcon />
+          </button>
+        </section>
+        <ArticleTitleText
+          title={blockText.title}
+          subtitle={blockText.subtitle}
+          description={blockText.description}
+        />
+        <section class="my-6 md:my-12">
+          <figure>
+            <img
+              src={project.image}
+              alt={project.title}
+              class="aspect-video object-cover rounded-4xl w-full"
+            />
+          </figure>
+        </section>
+        <section class="my-6 md:my-12">
+          <p class="text-xl md:text-4xl text-center md:px-24">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex.
+          </p>
+        </section>
+        <section class="my-6 md:my-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+          {
+            project.data.map((data, index) => (
+              <div
+                class:list={{
+                  "md:col-span-6": index > 2,
+                  "md:col-span-4": index < 5,
+                }}
+              >
+                <ArticleData
+                  number={(index + 1).toString().padStart(2, "0")}
+                  title={data.title}
+                  description={data.description}
+                />
+              </div>
+            ))
+          }
+        </section>
+        <ArticleTitleText
+          title={blockText.title}
+          subtitle={blockText.subtitle}
+          description={blockText.description}
+        />
+        <ArticleDobleImage
+          firstImage={project.image}
+          altFirstImage={project.title}
+          secondImage={project.image}
+          altSecondImage={project.title}
+        />
+        <ArticleTitleText
+          title={blockText.title}
+          subtitle={blockText.subtitle}
+          description={blockText.description}
+        />
+      </div>
+      <div class="md:w-[26rem] order-1 md:order-3 bg-[#F2F2F2] p-4 rounded-3xl">
+        <h2 class="text-5xl font-semibold mb-6">Otros proyectos</h2>
+        <ul class="flex flex-wrap gap-2">
+          <li>
+            <a
+              href="/"
+              class="bg-[#fff] py-2 px-6 rounded-3xl uppercase flex flex-col gap-y-4 text-[#808080] hover:bg-primary hover:text-black transition-all ease-out duration-300"
+            >
+              Todas
+            </a>
+          </li>
+          {
+            categories.map((category) => (
+              <li>
+                <a
+                  href="/"
+                  class="bg-[#fff] py-2 px-6 rounded-3xl uppercase flex flex-col gap-y-4 text-[#808080] hover:bg-primary hover:text-black transition-all ease-out duration-300"
+                >
+                  {category.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <section
+          class="mt-6 overflow-hidden md:h-screen w-full max-md:overflow-x-scroll"
+        >
+          <div
+            id="projects"
+            class="flex flex-row md:flex-col max-md:gap-x-4 md:gap-y-4 md:overflow-y-scroll md:h-screen box-content md:pr-4 w-[var(--projects-width)] md:w-full"
+          >
+            {
+              projects.map((project) => (
+                <div class="w-80 md:w-full">
+                  <ProjectCard
+                    id={project.id}
+                    tags={project.tags}
+                    title={project.title}
+                    description={project.description}
+                    shortDescription={project.shortDescription}
+                    image={project.image}
+                    link={project.link}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </article>
+</Layout>
+<script>
+  const resizeProjectsSection = () => {
+    const projectsSection = document.getElementById("projects");
+    if (!projectsSection) return;
+
+    if (window.innerWidth > 768) {
+      projectsSection.style.setProperty("--projects-width", "100%");
+    }
+
+    const totalProjects =
+      projectsSection?.querySelectorAll("article").length ?? 0;
+
+    const projectWidth = 320 + 16;
+
+    projectsSection.style.setProperty(
+      "--projects-width",
+      `${totalProjects * projectWidth}px`,
+    );
+  };
+
+  window.addEventListener("resize", resizeProjectsSection);
+  resizeProjectsSection();
+</script>

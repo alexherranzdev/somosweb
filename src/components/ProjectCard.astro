@@ -2,39 +2,30 @@
 import ArrowRightTop from "./icons/ArrowRightTop.astro";
 import PrimaryButton from "./PrimaryButton.astro";
 
-const { title, description, shortDescription, image, link, tags } = Astro.props;
+const { id, title, description, shortDescription, image, tags } = Astro.props;
 ---
 
-<a href={link} class="group">
-  <article>
-    <figure class="overflow-hidden aspect-video rounded-4xl">
-      <img
-        src={image}
-        class="aspect-video object-cover transition-all ease-out duration-500 group-hover:scale-120"
-      />
-      <figcaption class="sr-only">{shortDescription}</figcaption>
-    </figure>
-    <div class="p-4">
-      <div class="flex justify-between items-center">
-        <div>
-          <h3 class="text-xl font-semibold text-gray-900">{title}</h3>
-          <ul class="flex gap-2 text-sm text-gray-500 mt-1 tags">
-            {tags.map((tag) => <li class="uppercase">{tag}</li>)}
-          </ul>
-        </div>
-        <div>
-          <PrimaryButton href={link} rounded={true} tag="button">
-            <ArrowRightTop />
-          </PrimaryButton>
-        </div>
-      </div>
+<a href={`/project/${id}`} class="relative group">
+  <article
+    class="flex rounded-[1.75rem] bg-[#fff] p-2 transition-all ease-out duration-300"
+  >
+    <img
+      src={image}
+      alt={title}
+      class="w-28 h-28 md:w-32 md:h-32 aspect-square object-cover rounded-[1.25rem]"
+    />
+    <div class="flex flex-col gap-y-2 ml-4 overflow-hidden">
+      <h3 class="font-semibold text-gray-900 truncate">{title}</h3>
+      <ul class="flex flex-col text-sm text-[#808080] uppercase">
+        {tags.map((tag) => <li>#{tag}</li>)}
+      </ul>
     </div>
   </article>
-  <style>
-    .tags li + li::before {
-      content: "·";
-      display: inline-block;
-      margin-right: 5px;
-    }
-  </style></a
->
+  <PrimaryButton
+    tag="button"
+    rounded={true}
+    className="absolute bottom-2.5 right-2.5 group-hover:bg-primary"
+  >
+    <ArrowRightTop />
+  </PrimaryButton>
+</a>

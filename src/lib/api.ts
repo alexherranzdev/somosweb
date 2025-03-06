@@ -1,41 +1,74 @@
-const domain = import.meta.env.API_URL;
+import { apiFetch } from "./fetchClient";
+import type { Project, Category } from "./types";
 
-export const getProjects = async () => {
-  const projectsCategory = 1;
-  const data: any[] = [];
+const BASE_IMAGE_URL = "https://somosexperiences.com/static/image/";
+const PROJECTS_CATEGORY_ID = 1;
 
-  try {
-    const response = await fetch(
-      `${domain}/articles/all?category_id=${projectsCategory}&limit=5`,
-      {
-        signal: AbortSignal.timeout(3000),
-        mode: "no-cors",
-        redirect: "error",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + import.meta.env.API_TOKEN,
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch projects");
+const mapProject = (item: any): Project => ({
+  id: item.id,
+  title: item.description?.title || "Untitled",
+  description: item.description?.fulldescription || "",
+  shortDescription: item.description?.short_description || "",
+  image: `${BASE_IMAGE_URL}${item.image || "default.png"}`,
+  link: item.metas?.description?.slug || "#",
+  tags: ["Branding", "Interaction Design", "Website"],
+  data: [
+    {
+      title: "10M",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+    },
+    {
+      title: "120+",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+    },
+    {
+      title: "8M",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+    },
+    {
+      title: "535$",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+    },
+    {
+      title: "436+",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
     }
+  ]
+});
 
-    const { items } = await response.json();
-
-    items.forEach((item: any) => {
-      data.push({
-        title: item.description.title,
-        description: item.description.fulldescription,
-        shortDescription: item.description.short_description,
-        image: `https://somosexperiences.com/static/image/${item.image}`,
-        link: item.metas.description.slug,
-        tags: ["Branding", "Interaction Design", "Website"],
-      });
-    });
+export const getProject = async (slug: string): Promise<Project | null> => {
+  try {
+    const { items } = await apiFetch(`/articles/all?filter_id=${slug}&limit=1`);
+    const item = items[0];
+    return mapProject(item);
   } catch (error) {
-    // console.error(error)
+    console.error(`Error fetching project: ${slug}`, error);
+    return null;
   }
+};
 
-  return data;
+export const getProjects = async (): Promise<Project[]> => {
+  try {
+    const { items } = await apiFetch(`/articles/all?category_id=${PROJECTS_CATEGORY_ID}&limit=5`);
+    return items.map(mapProject);
+  } catch (error) {
+    console.error("Error fetching projects", error);
+    return [];
+  }
+};
+
+const mapCategory = (item: any): Category => ({
+  id: item.id,
+  title: item.title || "Untitled",
+  key: item.key,
+});
+
+export const getCategories = async (): Promise<Category[]> => {
+  try {
+    const { items } = await apiFetch(`/article_category/all?filter_parent_id=${PROJECTS_CATEGORY_ID}`);
+    return items.map(mapCategory)
+  } catch (error) {
+    console.error("Error fetching categories", error);
+    return [];
+  }
 };
