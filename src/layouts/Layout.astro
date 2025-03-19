@@ -36,7 +36,9 @@ const { title } = Astro.props;
       const key = link.getAttribute("data-key");
       if (key === "contact") {
         e.preventDefault();
-        document.querySelector("#contact-form").classList.add("is-open");
+        document
+          .querySelector("#contact-form-section")
+          .classList.add("is-open");
         document.body.classList.add("overflow-hidden");
       }
     });

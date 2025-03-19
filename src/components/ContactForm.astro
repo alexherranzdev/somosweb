@@ -5,7 +5,7 @@ import IconClose from "./icons/IconClose.astro";
 ---
 
 <section
-  id="contact-form"
+  id="contact-form-section"
   class="bg-[#121212] fixed z-[100001] transition-all duration-700 overflow-hidden top-0 right-0"
 >
   <div class="absolute top-4 right-8 scale-125 hover:scale-150 transition-all">
@@ -20,7 +20,7 @@ import IconClose from "./icons/IconClose.astro";
       </h2>
     </div>
     <div class="p-4">
-      <form action="" class="text-[#999]">
+      <form action="" class="text-[#999]" id="contact-form" method="POST">
         <div class="grid grid-cols-2 gap-x-4 gap-y-32">
           <FormInput label="Name" type="text" id="name" required={true} />
           <FormInput label="Phone" type="text" id="phone" />
@@ -60,7 +60,7 @@ import IconClose from "./icons/IconClose.astro";
               </label>
             </div>
             <div class="col-span-2">
-              <PrimaryButton>Send</PrimaryButton>
+              <PrimaryButton id="send-contact-form">Send</PrimaryButton>
             </div>
           </div>
         </div>
@@ -71,13 +71,37 @@ import IconClose from "./icons/IconClose.astro";
 <script>
   const closeContactForm = document.getElementById("close-contact-form");
   closeContactForm.addEventListener("click", () => {
-    document.querySelector("#contact-form").classList.remove("is-open");
+    document.querySelector("#contact-form-section").classList.remove("is-open");
     document.body.classList.remove("overflow-hidden");
+  });
+
+  const sendContactForm = document.getElementById("send-contact-form");
+  sendContactForm.addEventListener("click", async (e) => {
+    e.preventDefault();
+    console.log("aki");
+
+    const form = document.querySelector("#contact-form");
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
   });
 </script>
 <style>
+  section {
+    transform-origin: top right;
+  }
   section:not(.is-open) {
-    transform: translate(-100%, 0);
+    transform: translate(-100%, -50px);
     border-radius: 100%;
     width: 20px;
     height: 20px;
