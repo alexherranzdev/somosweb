@@ -10,9 +10,8 @@
   --text-color: #000;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --body-bg: #000;
-    --text-color: #fff;
+@media (min-width: 701px) {
+  #sidebar::-webkit-scrollbar {
+    width: 0;
   }
-} */
+}

@@ -2,30 +2,44 @@
 import ArrowTop from "./icons/ArrowTop.astro";
 import BCorp from "./icons/BCorp.astro";
 import PrimaryButton from "./PrimaryButton.astro";
-
 ---
+
 <footer class="bg-black text-white px-2 md:px-4 py-4 md:py-9">
   <div class="flex flex-col lg:flex-row justify-between gap-y-8">
     <div class="max-w-2xl">
-      <h4 class="text-3xl md:text-4xl lg:text-5xl font-semibold">Stay connected! Share your email, and we'll be in touch.</h4>
+      <h4 class="text-3xl md:text-4xl lg:text-5xl font-semibold">
+        Stay connected! Share your email, and we'll be in touch.
+      </h4>
 
       <form class="mt-14 md:max-w-3/4">
         <div class="flex gap-x-2">
-          <input type="email" placeholder="E-mail" class="w-full py-2 bg-transparent text-white focus:outline-none focus:border-primary border-b border-solid border-[#999]" />
+          <input
+            type="email"
+            placeholder="E-mail"
+            class="w-full py-2 bg-transparent text-white focus:outline-none focus:border-primary border-b border-solid border-[#999]"
+          />
           <PrimaryButton tag="button" type="submit">SEND</PrimaryButton>
         </div>
         <div class="inline-flex mt-4">
-          <label class="flex gap-x-2 items-start cursor-pointer" for="privacy-policy">
-            <div class="relative flex items-center mt-1"> 
+          <label
+            class="flex gap-x-2 items-start cursor-pointer"
+            for="privacy-policy"
+          >
+            <div class="relative flex items-center mt-1">
               <input
                 name="color"
                 type="radio"
                 class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all"
                 id="privacy-policy"
               />
-              <span class="absolute bg-primary w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
+              <span
+                class="absolute bg-primary w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              ></span>
             </div>
-            <span>Estoy de acuerdo que mi email se almacene y utilice para recibir información.</span>
+            <span
+              >Estoy de acuerdo que mi email se almacene y utilice para recibir
+              información.</span
+            >
           </label>
         </div>
       </form>
@@ -64,46 +78,72 @@ import PrimaryButton from "./PrimaryButton.astro";
     </ul>
 
     <div class="flex lg:gap-x-5 items-end justify-end">
-      <ul class="flex divide-x-1 divide-solid divide-[#999] gap-x-0.5 lg:gap-x-2">
-        <li><a href="/" class="text-[#999] hover:opacity-70 text-xs lg:text-sm pr-0.5 lg:pr-2 transition-all">Terms & Conditions</a></li>
-        <li><a href="/" class="text-[#999] hover:opacity-70 text-xs lg:text-sm pr-0.5 lg:pr-2 transition-all">Privacy Policy</a></li>
+      <ul
+        class="flex divide-x-1 divide-solid divide-[#999] gap-x-0.5 lg:gap-x-2"
+      >
+        <li>
+          <a
+            href="/"
+            class="text-[#999] hover:opacity-70 text-xs lg:text-sm pr-0.5 lg:pr-2 transition-all"
+            >Terms & Conditions</a
+          >
+        </li>
+        <li>
+          <a
+            href="/"
+            class="text-[#999] hover:opacity-70 text-xs lg:text-sm pr-0.5 lg:pr-2 transition-all"
+            >Privacy Policy</a
+          >
+        </li>
       </ul>
-      <span class="text-[#999] text-xs lg:text-sm">&copy; 2025 Somos Experiences</span>
+      <span class="text-[#999] text-xs lg:text-sm"
+        >&copy; 2025 Somos Experiences</span
+      >
     </div>
   </div>
 </footer>
-<div class="fixed bottom-14 right-2 z-[100]  transition-all ease-out duration-500">
-  <PrimaryButton id="to-top" tag="button" rounded>
+<div
+  class="fixed bottom-14 right-2 z-[100] transition-all ease-out duration-500"
+>
+  <PrimaryButton
+    id="to-top"
+    tag="button"
+    rounded
+    className="hover:scale-125 hover:-translate-y-2 hover:opacity-100"
+  >
     <ArrowTop />
   </PrimaryButton>
 </div>
 <script>
   const buttonToTopVisibility = () => {
-    const button = document.getElementById("to-top")
-    if (!button) return
+    const button = document.getElementById("to-top");
+    if (!button) return;
 
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+    if (
+      document.body.scrollTop > 500 ||
+      document.documentElement.scrollTop > 500
+    ) {
       button.classList.remove("opacity-0");
     } else {
       button.classList.add("opacity-0");
     }
-  }
+  };
 
   const buttonToTopListener = () => {
-    const button = document.getElementById("to-top")
-    if (!button) return
+    const button = document.getElementById("to-top");
+    if (!button) return;
 
     button.addEventListener("click", () => {
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
-      })
-    })
-  }
+        behavior: "smooth",
+      });
+    });
+  };
 
-  buttonToTopVisibility()
-  buttonToTopListener()
+  buttonToTopVisibility();
+  buttonToTopListener();
   window.onscroll = () => {
-      buttonToTopVisibility()
-    }
+    buttonToTopVisibility();
+  };
 </script>

@@ -1,11 +1,12 @@
 ---
-const {
-  title,
-  href,
-  isActive = false
-} = Astro.props
+const { title, href, isActive = false, ...props } = Astro.props;
 ---
-<a href={href} class={`${isActive ? "is-active" : ""} py-3 px-1 flex md:items-center text-black`}>
+
+<a
+  href={href}
+  class={`${isActive ? "is-active" : ""} py-3 px-1 flex md:items-center text-black`}
+  {...props}
+>
   {title}
   <slot />
 </a>

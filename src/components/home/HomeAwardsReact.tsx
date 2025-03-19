@@ -84,7 +84,7 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
     const totalCirclePerSize = {
       0: 5,
       960: 12,
-      1280: 20,
+      1280: 24,
     };
 
     const currentWindowWidth = window.innerWidth;
@@ -109,8 +109,8 @@ const HomeAwardsReact = ({ awards }: { awards: Award[] }) => {
         Math.random() * height,
         size / 2,
         {
-          restitution: 0.8,
-          friction: 0,
+          restitution: 0.2,
+          friction: 1,
           label: `circle-${index + 1}`,
           render: {
             fillStyle: "rgba(255, 255, 255)",

@@ -1,0 +1,94 @@
+---
+import FormInput from "@components/FormInput.astro";
+import PrimaryButton from "@components/PrimaryButton.astro";
+import IconClose from "./icons/IconClose.astro";
+---
+
+<section
+  id="contact-form"
+  class="bg-[#121212] fixed z-[100001] transition-all duration-700 overflow-hidden top-0 right-0"
+>
+  <div class="absolute top-4 right-8 scale-125 hover:scale-150 transition-all">
+    <PrimaryButton tag="button" rounded={true} id="close-contact-form">
+      <IconClose />
+    </PrimaryButton>
+  </div>
+  <div class="pt-36 px-4 grid lg:grid-cols-2">
+    <div class="p-4">
+      <h2 class="text-white text-4xl font-bold lg:text-8xl">
+        Let's create something epic together
+      </h2>
+    </div>
+    <div class="p-4">
+      <form action="" class="text-[#999]">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-32">
+          <FormInput label="Name" type="text" id="name" required={true} />
+          <FormInput label="Phone" type="text" id="phone" />
+          <FormInput label="Email" type="email" id="email" required={true} />
+          <FormInput label="Company" type="text" id="company" required={true} />
+          <div class="col-span-2">
+            <FormInput
+              label="Project description"
+              type="text"
+              id="description"
+              required={true}
+            />
+          </div>
+          <div class="col-span-2 grid lg:grid-cols-6 gap-x-4 gap-y-8">
+            <div class="col-span-4">
+              <label
+                class="flex gap-x-2 items-start cursor-pointer"
+                for="privacy-policy"
+              >
+                <div class="relative flex items-center mt-1">
+                  <input
+                    name="color"
+                    type="checkbox"
+                    class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all"
+                    id="privacy-policy"
+                  />
+                  <span
+                    class="absolute bg-primary w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  ></span>
+                </div>
+                <span
+                  >I affirm that I have been informed and give my consent for
+                  the personal data collected to be processed by the organizing
+                  agency in order to establish a commercial relationship in the
+                  terms established herein.</span
+                >
+              </label>
+            </div>
+            <div class="col-span-2">
+              <PrimaryButton>Send</PrimaryButton>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  const closeContactForm = document.getElementById("close-contact-form");
+  closeContactForm.addEventListener("click", () => {
+    document.querySelector("#contact-form").classList.remove("is-open");
+    document.body.classList.remove("overflow-hidden");
+  });
+</script>
+<style>
+  section:not(.is-open) {
+    transform: translate(-100%, 0);
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    /* opacity: 0; */
+  }
+
+  .is-open {
+    transform: translate(0, 0);
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    opacity: 1;
+  }
+</style>

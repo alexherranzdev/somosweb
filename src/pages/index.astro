@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getProjects } from "../lib/api";
+import { getProjects, getAwards } from "../lib/api";
 import HomeHero from "../components/home/HomeHero.astro";
 import HomeProjects from "../components/home/HomeProjects.astro";
 import HomeData from "../components/home/HomeData.astro";
@@ -8,48 +8,22 @@ import HomeServices from "../components/home/HomeServices.astro";
 import HomeClients from "../components/home/HomeClients.astro";
 import HomeCoreValues from "../components/home/HomeCoreValues.astro";
 import HomeVideo from "../components/home/HomeVideo.astro";
-import HomeAwards from "../components/home/HomeAwardsNew.astro";
-import HomeAwardsReact from "../components/home/HomeAwardsReact.tsx";
+import HomeAwardsReact from "../components/home/HomeAwardsP5.tsx";
 
-const projects = await getProjects();
+const awards = await getAwards();
+const projects = await getProjects({
+  pageNumber: 1,
+  pageSize: 12,
+  orderBy: "created_at",
+  order: "desc",
+  filters: [{ key: "category_id", value: 1 }],
+});
 const latestProjects = projects.length ? projects.slice(0, 3) : [];
-const featuredProjects = projects.length ? projects.slice(3, 6) : [];
-
-const awards = [
-  {
-    id: 1,
-    title: "Award 1",
-    image: "/images/project-1.jpeg",
-    years: ["2019", "2020", "2024"],
-    description: "sadfafas",
-  },
-  {
-    id: 2,
-    title: "Award 2",
-    image: "/images/project-1.jpeg",
-    years: ["2020", "2021", "2024"],
-    description: "sadfafas",
-  },
-  {
-    id: 3,
-    title: "Award 3",
-    image: "/images/project-1.jpeg",
-    years: ["2017", "2020", "2023"],
-    description: "sadfafas",
-  },
-  {
-    id: 4,
-    title: "Award 4",
-    image: "/images/project-1.jpeg",
-    years: ["2020", "2024", "2025"],
-    description: "sadfafas",
-  },
-];
+const featuredProjects = projects.length ? projects.slice(3, 5) : [];
 ---
 
 <Layout title="Home">
-  <HomeHero projects={projects} />
-
+  <HomeHero projects={projects.slice(0, 10)} />
   {
     (
       <HomeProjects
@@ -65,6 +39,5 @@ const awards = [
   <HomeClients />
   <HomeCoreValues />
   <HomeVideo />
-  <HomeAwardsReact awards={awards} client:load />
-  {false && <HomeAwards awards={awards} />}
+  <HomeAwardsReact client:load awards={awards} />
 </Layout>

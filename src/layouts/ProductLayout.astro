@@ -1,14 +1,13 @@
 ---
 import "@fontsource/space-grotesk";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import PageSeo from "@components/PageSeo.astro";
+import ProgressBar from "@components/ProgressBar.astro";
 
 import { defaultLanguage } from "../i18n/ui";
 import MainBody from "@components/MainBody.astro";
-import ContactForm from "@components/ContactForm.astro";
 const lang = Astro.currentLocale ?? defaultLanguage;
 
 const { title } = Astro.props;
@@ -21,28 +20,13 @@ const { title } = Astro.props;
     <ClientRouter />
   </head>
   <body class="flex min-h-full flex-col">
+    <ProgressBar />
     <Header />
     <MainBody>
       <slot />
     </MainBody>
-    <Footer />
-    <ContactForm />
   </body>
 </html>
-<script>
-  const links = document.querySelectorAll("a");
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const key = link.getAttribute("data-key");
-      if (key === "contact") {
-        e.preventDefault();
-        document.querySelector("#contact-form").classList.add("is-open");
-        document.body.classList.add("overflow-hidden");
-      }
-    });
-  });
-</script>
-
 <style>
   html,
   body {

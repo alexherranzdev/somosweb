@@ -5,6 +5,10 @@ import HomeProjectCard from "../HomeProjectCard.astro";
 import SectionTitle from "../SectionTitle.astro";
 import type { Project } from "../../lib/types";
 
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const { title, latestProjects, featuredProjects } = Astro.props;
 
 if (!latestProjects.length && !featuredProjects.length) {
@@ -16,7 +20,7 @@ if (!latestProjects.length && !featuredProjects.length) {
   <header class="flex justify-between">
     <SectionTitle title={title} />
     <PrimaryButton href="/projects">
-      See more
+      {t("see-more")}
       <ArrowRightTop />
     </PrimaryButton>
   </header>

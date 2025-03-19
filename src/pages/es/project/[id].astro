@@ -5,7 +5,7 @@ import ArticleDobleImage from "@components/ArticleDobleImage.astro";
 import ArticleTitleText from "@components/ArticleTitleText.astro";
 import PlayIcon from "@components/icons/PlayIcon.astro";
 import ProductLayout from "@layouts/ProductLayout.astro";
-import ProjectsSidebar from "@components/ProjectsSidebar.tsx";
+import ProjectsSidebar from "@components/ProjectsSidebar.astro";
 import { getProject, getProjects, getCategories } from "@lib/api";
 
 const { id: stringId } = Astro.params;
@@ -127,7 +127,7 @@ if (!project) {
           description={blockText.description}
         />
       </article>
-      <ProjectsSidebar currentProject={project} client:load />
+      <ProjectsSidebar projects={projects} categories={categories} />
     </div>
   </div>
   <style>
