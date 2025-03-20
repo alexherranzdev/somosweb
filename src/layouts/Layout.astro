@@ -29,22 +29,6 @@ const { title } = Astro.props;
     <ContactForm />
   </body>
 </html>
-<script>
-  const links = document.querySelectorAll("a");
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const key = link.getAttribute("data-key");
-      if (key === "contact") {
-        e.preventDefault();
-        document
-          .querySelector("#contact-form-section")
-          .classList.add("is-open");
-        document.body.classList.add("overflow-hidden");
-      }
-    });
-  });
-</script>
-
 <style>
   html,
   body {

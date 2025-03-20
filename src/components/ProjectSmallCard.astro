@@ -5,11 +5,11 @@ import PrimaryButton from "./PrimaryButton.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 const currentLocale = Astro.currentLocale ?? "en";
 
-const { id, title, image, tags, index } = Astro.props;
+const { id, title, image, tags, index, link } = Astro.props;
 ---
 
 <a
-  href={getRelativeLocaleUrl(currentLocale, `/project/${id}`)}
+  href={getRelativeLocaleUrl(currentLocale, `/project/${link}`)}
   class="relative group"
 >
   <article
