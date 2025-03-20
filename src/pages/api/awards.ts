@@ -1,6 +1,5 @@
 export async function GET() {
   try {
-    console.log('akiiii')
     const data = await import('@data/awards.json')
 
     const items = data.items;

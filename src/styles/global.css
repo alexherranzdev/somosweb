@@ -15,3 +15,8 @@
     width: 0;
   }
 }
+
+.product-layout #header-navbar,
+.product-layout #hire-us{
+  transform: translateY(-180px);
+}

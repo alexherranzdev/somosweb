@@ -23,7 +23,7 @@ export default function ProjectCard({ id, title, image, tags, index, className =
     }
 
     url.push("project")
-    url.push(id)
+    url.push(link)
 
     return "/" + url.join("/");
   }

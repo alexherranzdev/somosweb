@@ -95,7 +95,9 @@ let languageActive = languages.find((l) => l.isActive) ?? languages[0];
       id="logo"
       class="md:flex-grow md:basis-0 flex justify-start opacity-0 data-[open]:opacity-100"
     >
-      <Logo color="#000" />
+      <a href="/">
+        <Logo color="#000" />
+      </a>
     </div>
     <nav
       id="header-navbar"
@@ -184,6 +186,7 @@ let languageActive = languages.find((l) => l.isActive) ?? languages[0];
     </nav>
 
     <div
+      id="hire-us"
       class="flex md:flex-grow md:basis-0 items-center gap-4 ml-auto justify-end"
     >
       <PrimaryButton className="drop-shadow-xl">

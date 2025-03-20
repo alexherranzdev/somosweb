@@ -1,7 +1,7 @@
-export default function ProjectSmallCard({ id, title, image, tags, index }) {
+export default function ProjectSmallCard({ id, title, image, tags, link, index }: { id: string, title: string, image: string, tags: string[], link: string, index: number }) {
   return (
     <a
-      href={`/project/${id}`}
+      href={link}
       className="relative group"
     >
       <article

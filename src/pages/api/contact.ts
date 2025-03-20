@@ -3,9 +3,7 @@ import type { APIRoute } from "astro";
 import { SendSmtpEmail, TransactionalEmailsApi, TransactionalEmailsApiApiKeys } from "@getbrevo/brevo"
 
 export const POST: APIRoute = async ({ request }) => {
-  console.log("aki etrno" );
   const data = await request.json();
-  console.log(data);
 
   const BREVO_API_KEY = "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"
 
@@ -31,7 +29,8 @@ export const POST: APIRoute = async ({ request }) => {
   ];
   sendSmtpEmail.params = { "name": data.name, "email": data.email, "message": data.message, "phone": data.phone, "company": data.company };
 
-  apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
+  apiInstance.sendTransacEmail(sendSmtpEmail)
+  .then(function (data) {
     console.log('API called successfully. Returned data: ' + JSON.stringify(data));
   }, function (error) {
     console.error(error);

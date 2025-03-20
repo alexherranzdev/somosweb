@@ -39,6 +39,17 @@ export const mapProject = (item: any): Project => ({
   ]
 });
 
+export const getProjectBySlug = async (slug: string): Promise<Project | null> => {
+  try {
+    const { items } = await apiFetch(`/articles/all?filter_metas_description|slug=${slug}&limit=1&with=metas`);
+    const item = items[0];
+    return mapProject(item);
+  } catch (error) {
+    console.error(`Error fetching project: ${slug}`, error);
+    return null;
+  }
+}
+
 export const getProject = async (id: number): Promise<Project | null> => {
   try {
     const { items } = await apiFetch(`/articles/all?filter_id=${id}&limit=1`);

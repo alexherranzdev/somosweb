@@ -25,7 +25,7 @@ const { title } = Astro.props;
     <MainBody>
       <slot />
     </MainBody>
-    <Footer />
+    <Footer transition:persist="footer" />
     <ContactForm />
   </body>
 </html>

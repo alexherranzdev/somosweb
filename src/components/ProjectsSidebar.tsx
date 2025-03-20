@@ -19,6 +19,34 @@ export default function ProjectsSidebar({ currentProject} : { currentProject: Pr
   const [categories, setCategories] = useState<Category[]>([]);
   const sentinelRef = useRef(null);
 
+  useEffect(() => {
+    const resizeProjectsSection = () => {
+      const projectsSection = document.getElementById("projects");
+      if (!projectsSection) return;
+
+      if (window.innerWidth > 768) {
+        projectsSection.style.setProperty("--projects-width", "100%");
+      }
+
+      const totalProjects =
+        projectsSection.querySelectorAll("article").length ?? 0;
+
+      const projectWidth = 320 + 16;
+
+      projectsSection.style.setProperty(
+        "--projects-width",
+        `${totalProjects * projectWidth}px`
+      );
+    };
+
+    window.addEventListener("resize", resizeProjectsSection);
+    resizeProjectsSection();
+
+    return () => {
+      window.removeEventListener("resize", resizeProjectsSection);
+    };
+  }, [projects])
+
   const fetchCategories = async () => {
     try {
       const response = await fetch(`/api/category?filter_parent_id=${categoryFilter}`);
@@ -35,9 +63,9 @@ export default function ProjectsSidebar({ currentProject} : { currentProject: Pr
       try {
         const response = await fetch(`/api/projects?page=${Math.floor(offset / LIMIT) + 1}&limit=${LIMIT}&category_id=${categoryFilter}`);
         const items = await response.json();
-        const newProjects = items.map(mapProject).filter((project) => project.id !== currentProject.id);
+        const newProjects = items.map(mapProject).filter((project: Project) => project.id !== currentProject.id);
   
-        setProjects((prev) => [...prev, ...newProjects]);
+        setProjects((prev: Project[]) => [...prev, ...newProjects]);
         setHasMore(newProjects.length === LIMIT);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -77,10 +105,7 @@ export default function ProjectsSidebar({ currentProject} : { currentProject: Pr
     }, [hasMore])
   
   return (
-    <div
-      id="sidebar"
-      className="lg:w-[26rem] order-1 lg:order-3 bg-white sticky lg:h-[calc(100vh-8rem)] top-6 overflow-y-auto overflow-hidden"
-    >
+    <>
       <header>
         <h2 className="text-4xl xl:text-5xl font-semibold mb-6">
           {t("projects.header.title")}
@@ -122,8 +147,6 @@ export default function ProjectsSidebar({ currentProject} : { currentProject: Pr
                   id={project.id}
                   tags={project.tags}
                   title={project.title}
-                  description={project.description}
-                  shortDescription={project.shortDescription}
                   image={project.image}
                   link={project.link}
                   key={project.id}
@@ -136,6 +159,6 @@ export default function ProjectsSidebar({ currentProject} : { currentProject: Pr
           {loading && <p className="text-center py-4">Cargando más proyectos...</p>}
         </nav>
       </section>
-    </div>
+    </>
   )
 }
