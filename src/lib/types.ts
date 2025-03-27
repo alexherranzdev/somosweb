@@ -35,3 +35,12 @@ export interface Award {
   years: string[];
   description: string;
 }
+
+export interface Company {
+  id: number;
+  name: string;
+  city: string;
+  telephone: string;
+  address: string;
+  zipCode: string;
+}

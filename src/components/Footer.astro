@@ -1,8 +1,15 @@
 ---
-import ArrowTop from "./icons/ArrowTop.astro";
+import type { Company } from "@lib/types";
+import FooterCompany from "./FooterCompany.astro";
 import BCorp from "./icons/BCorp.astro";
 import PrimaryButton from "./PrimaryButton.astro";
 import ScrollToTopButton from "@components/ScrollToTopButton.astro";
+import { COMPANIES } from "@data/companies";
+import { getLinks, getSocialLinks } from "@data/links";
+
+const currentLocale = Astro.currentLocale ?? "en";
+const links = getLinks(currentLocale, Astro.url.pathname);
+const socialNetworks = getSocialLinks();
 ---
 
 <footer class="bg-black text-white px-2 md:px-4 py-4 md:py-9">
@@ -47,17 +54,15 @@ import ScrollToTopButton from "@components/ScrollToTopButton.astro";
     </div>
     <div class="grid grid-cols-2 gap-x-12 gap-y-12 uppercase">
       <div class="flex flex-col gap-y-3">
-        <a href="" class="hover:opacity-70 transition-all">Home</a>
-        <a href="" class="hover:opacity-70 transition-all">Projects</a>
-        <a href="" class="hover:opacity-70 transition-all">Services</a>
-        <a href="" class="hover:opacity-70 transition-all">Contact</a>
+        {links.map((link) => (
+          <a href={link.href} class="hover:opacity-70 transition-all" data-key={link.key}>{link.title}</a>
+        ))}
       </div>
 
       <div class="flex flex-col gap-y-3">
-        <a href="" class="hover:opacity-70 transition-all">Madrid</a>
-        <a href="" class="hover:opacity-70 transition-all">Barcelona</a>
-        <a href="" class="hover:opacity-70 transition-all">Bilbao</a>
-        <a href="" class="hover:opacity-70 transition-all">Málaga</a>
+        {COMPANIES.map((company: Company) => (
+          <FooterCompany city={company.city} telephone={company.telephone} address={company.address} zipCode={company.zipCode} name={company.name} />
+        ))}
       </div>
 
       <div class="flex flex-col gap-y-2">
@@ -67,15 +72,11 @@ import ScrollToTopButton from "@components/ScrollToTopButton.astro";
   </div>
   <div class="flex flex-col md:flex-row lg:justify-between mt-8 lg:items-end">
     <ul class="flex flex-col md:gap-y-4 text-2xl font-semibold">
-      <li>
-        <a href="/" class="hover:opacity-70 transition-all">Instagram</a>
-      </li>
-      <li>
-        <a href="/" class="hover:opacity-70 transition-all">Vimeo</a>
-      </li>
-      <li>
-        <a href="/" class="hover:opacity-70 transition-all">Linkedin</a>
-      </li>
+      {socialNetworks.map((network) => (
+        <li>
+          <a href={network.href} class="hover:opacity-70 transition-all" target="_blank">{network.title}</a>
+        </li>
+      ))}
     </ul>
 
     <div class="flex lg:gap-x-5 items-end justify-end">

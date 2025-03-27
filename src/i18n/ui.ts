@@ -28,5 +28,15 @@ export const ui = {
     'nav.contact': 'Contacto',
     'projects.title': 'Portfolio',
     'projects.header.title': 'Nuestro Portfolio',
+  },
+  ca: {
+    'all': 'Tots',
+    'see-more': 'Veure més',
+    'nav.home': 'Inici',
+    'nav.projects': 'Portfolio',
+    'nav.services': 'Serveis',
+    'nav.contact': 'Contacte',
+    'projects.title': 'Portfolio',
+    'projects.header.title': 'El nostre Portfolio',
   }
 }

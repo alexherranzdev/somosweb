@@ -9,6 +9,10 @@ import HomeClients from "@components/home/HomeClients.astro";
 import HomeCoreValues from "@components/home/HomeCoreValues.astro";
 import HomeVideo from "@components/home/HomeVideo.astro";
 import HomeAwardsReact from "@components/home/HomeAwardsReact.tsx";
+import { getLangFromUrl, useTranslations } from "src/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const awards = await getAwards();
 const projects = await getProjects({
@@ -27,7 +31,7 @@ const featuredProjects = projects.length ? projects.slice(3, 5) : [];
   {
     (
       <HomeProjects
-        title="Nuestro portfolio"
+        title={t("projects.header.title")}
         latestProjects={latestProjects}
         featuredProjects={featuredProjects}
       />

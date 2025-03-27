@@ -9,6 +9,7 @@ import HamburgerButton from "./HamburgerButton.astro";
 import ArrowBottom from "./icons/ArrowBottom.astro";
 
 import { getLangFromUrl, useTranslations, getBaseUrl } from "../i18n/utils";
+import { getLinks, getSocialLinks } from "@data/links";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -24,41 +25,8 @@ if (!currentPath.startsWith("/")) {
   currentPath = "/" + currentPath;
 }
 
-const links = [
-  {
-    key: "home",
-    title: t("nav.home"),
-    href: getRelativeLocaleUrl(currentLocale, "/"),
-    isActive: currentPath === "/",
-  },
-  {
-    key: "projects",
-    title: t("nav.projects"),
-    href: getRelativeLocaleUrl(currentLocale, "/projects"),
-    isActive: currentPath.startsWith("/project"),
-  },
-  {
-    key: "services",
-    title: t("nav.services"),
-    href: getRelativeLocaleUrl(currentLocale, "/services"),
-    isActive: currentPath.startsWith("/services"),
-  },
-  {
-    key: "contact",
-    title: t("nav.contact"),
-    href: getRelativeLocaleUrl(currentLocale, "/contact"),
-    isActive: currentPath.startsWith("/contact"),
-  },
-];
-
-const socialNetworks = [
-  { title: "Instagram", href: "https://www.instagram.com/somos.experiences/" },
-  { title: "Vimeo", href: "https://vimeo.com/somosexperiences" },
-  {
-    title: "Linkedin",
-    href: "https://www.linkedin.com/company/somos-experiences/",
-  },
-];
+const links = getLinks(currentLocale, Astro.url.pathname);
+const socialNetworks = getSocialLinks()
 
 const languages = [
   {
@@ -131,7 +99,7 @@ let languageActive = languages.find((l) => l.isActive) ?? languages[0];
             {
               socialNetworks.map(({ title, href }) => (
                 <li>
-                  <a href={href} class="text-black font-semibold text-2xl">
+                  <a href={href} class="text-black font-semibold text-2xl" target="_blank">
                     {title}
                   </a>
                 </li>
