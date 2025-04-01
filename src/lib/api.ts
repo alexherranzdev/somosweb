@@ -1,5 +1,5 @@
 import { apiFetch } from "./fetchClient";
-import type { Project, Category, CriteriaBuilder, Award } from "./types";
+import type { Project, Category, CriteriaBuilder, Award, Company, Filter } from "./types";
 
 const BASE_IMAGE_URL = import.meta.env.BASE_IMAGE_URL;
 const PROJECTS_CATEGORY_ID = 1;
@@ -81,11 +81,27 @@ export const getProjects = async (criteria: CriteriaBuilder): Promise<Project[]>
     let url = '/articles/all'
     const params = []
     params.push(`category_id=${PROJECTS_CATEGORY_ID}`)
-    params.push(`filter_status=1`)
     params.push(`limit=${criteria.pageSize}`)
     params.push(`page=${criteria.pageNumber}`)
     params.push(`sort=${criteria.orderBy}`)
     params.push(`order=${criteria.order}`)
+
+    let hasFilterStatus = false
+    if (criteria.filters) {
+      criteria.filters.forEach((filter: Filter) => {
+        if (filter.key === 'status') {
+          hasFilterStatus = true
+        }
+
+        if (filter.key !== 'category') {
+          params.push(`filter_${filter.key}=${filter.value.toString()}`)
+        }
+      })
+    }
+
+    if (!hasFilterStatus) {
+      params.push(`filter_status=1`)
+    }
 
     if (params.length > 0) {
       url += `?${params.join('&')}`
@@ -142,6 +158,14 @@ export const getAwards = async (): Promise<Award[]> => {
     return [];
   }
 }
-    
 
-
+export const getCompanies = async (): Promise<Company[]> => {
+  try {
+    const response = await fetch('http://localhost:4321/api/companies')
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error("Error fetching companies", error);
+    return [];
+  }
+}

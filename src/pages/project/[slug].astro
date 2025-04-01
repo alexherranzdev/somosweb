@@ -6,6 +6,10 @@ import PlayIcon from "@components/icons/PlayIcon.astro";
 import ProductLayout from "@layouts/ProductLayout.astro";
 import ProjectsSidebar from "@components/ProjectsSidebar.tsx";
 import { getProjectBySlug } from "@lib/api";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const { slug } = Astro.params;
 if (!slug) {
@@ -21,7 +25,7 @@ const blockText = {
 };
 
 if (!project) {
-  throw new Error(`Proyecto no encontrado para el ID: ${id}`);
+  throw new Error(`Proyecto no encontrado para el slug: ${slug}`);
 }
 ---
 

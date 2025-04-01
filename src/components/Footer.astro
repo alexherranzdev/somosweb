@@ -2,10 +2,10 @@
 import type { Company } from "@lib/types";
 import FooterCompany from "./FooterCompany.astro";
 import BCorp from "./icons/BCorp.astro";
-import PrimaryButton from "./PrimaryButton.astro";
 import ScrollToTopButton from "@components/ScrollToTopButton.astro";
 import { COMPANIES } from "@data/companies";
 import { getLinks, getSocialLinks } from "@data/links";
+import FormNewsletter from "./FormNewsletter.astro";
 
 const currentLocale = Astro.currentLocale ?? "en";
 const links = getLinks(currentLocale, Astro.url.pathname);
@@ -14,44 +14,7 @@ const socialNetworks = getSocialLinks();
 
 <footer class="bg-black text-white px-2 md:px-4 py-4 md:py-9">
   <div class="flex flex-col lg:flex-row justify-between gap-y-8">
-    <div class="max-w-2xl">
-      <h4 class="text-3xl md:text-4xl lg:text-5xl font-semibold">
-        Stay connected! Share your email, and we'll be in touch.
-      </h4>
-
-      <form class="mt-14 md:max-w-3/4">
-        <div class="flex gap-x-2">
-          <input
-            type="email"
-            placeholder="E-mail"
-            class="w-full py-2 bg-transparent text-white focus:outline-none focus:border-primary border-b border-solid border-[#999]"
-          />
-          <PrimaryButton tag="button" type="submit">SEND</PrimaryButton>
-        </div>
-        <div class="inline-flex mt-4">
-          <label
-            class="flex gap-x-2 items-start cursor-pointer"
-            for="privacy-policy"
-          >
-            <div class="relative flex items-center mt-1">
-              <input
-                name="color"
-                type="radio"
-                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all"
-                id="privacy-policy"
-              />
-              <span
-                class="absolute bg-primary w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              ></span>
-            </div>
-            <span
-              >Estoy de acuerdo que mi email se almacene y utilice para recibir
-              información.</span
-            >
-          </label>
-        </div>
-      </form>
-    </div>
+    <FormNewsletter />
     <div class="grid grid-cols-2 gap-x-12 gap-y-12 uppercase">
       <div class="flex flex-col gap-y-3">
         {links.map((link) => (

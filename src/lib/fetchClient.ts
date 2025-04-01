@@ -16,6 +16,7 @@ const createHeaders = (): Headers => {
 };
 
 export const apiFetch = async (url: string) => {
+  console.log(`${domain}${url}`);
   const response = await fetch(`${domain}${url}`, {
     signal: AbortSignal.timeout(3000),
     mode: "cors",

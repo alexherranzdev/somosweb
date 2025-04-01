@@ -49,12 +49,12 @@ const languages = [
 let languageActive = languages.find((l) => l.isActive) ?? languages[0];
 ---
 
-<div class="fixed top-7 left-5 z-50 mix-blend-difference">
+<div class="fixed top-7 left-5 z-50 mix-blend-difference animate-fade-in-down">
   <Logo />
 </div>
 <header
   id="header"
-  class="fixed left-0 top-0 right-0 bg-transparent w-full z-[99999] py-4 px-5 data-[open]:bg-white"
+  class="fixed left-0 top-0 right-0 bg-transparent w-full z-[99999] py-4 px-5 data-[open]:bg-white animate-fade-in-down"
 >
   <div
     class="grid items-center justify-center md:justify-normal w-full grid-cols-[auto_1fr] mx-auto text-white gap-x-10 md:flex max-w-screen-full"

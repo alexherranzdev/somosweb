@@ -3,7 +3,7 @@ export interface CriteriaBuilder {
   pageSize: number;
   orderBy: string;
   order: string;
-  filters: object[];
+  filters?: Filter[];
 }
 
 export interface ArticleData {
@@ -43,4 +43,9 @@ export interface Company {
   telephone: string;
   address: string;
   zipCode: string;
+}
+
+export interface Filter {
+  key: string;
+  value: string | number;
 }

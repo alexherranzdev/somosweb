@@ -7,7 +7,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
   const BREVO_SENDER = import.meta.env.BREVO_SENDER ?? 'digital@somosexperiences.com';
-  const CONCTACT_EMAIL = import.meta.env.CONCTACT_EMAIL ?? 'digital@somosexperiences.com';
+  const NEWSLETTER_EMAIL = import.meta.env.NEWSLETTER_EMAIL ?? 'digital@somosexperiences.com';
+
   if (!BREVO_API_KEY) {
     return new Response(JSON.stringify({ error: 'BREVO_API_KEY not configured' }), { status: 500 });
   }
@@ -16,21 +17,15 @@ export const POST: APIRoute = async ({ request }) => {
   apiInstance.setApiKey(TransactionalEmailsApiApiKeys.apiKey, BREVO_API_KEY);
   let sendSmtpEmail = new SendSmtpEmail();
 
-  sendSmtpEmail.subject = "New Contact Form Submission from SOMOS Web";
+  sendSmtpEmail.subject = "Newsletter Submission from SOMOS Web";
   let htmlContent = "<html><body>";
-  htmlContent += "<h1>New Contact Form Submission from SOMOS Web</h1>";
-  htmlContent += "<p>Name: " + data.name + "</p>";
+  htmlContent += "<h1>Newsletter Submission from SOMOS Web</h1>";
   htmlContent += "<p>Email: " + data.email + "</p>";
-  if (data.phone) {
-    htmlContent += "<p>Phone: " + data.phone + "</p>";
-  }
-  htmlContent += "<p>Company: " + data.company + "</p>";
-  htmlContent += "<p>Message: " + data.message + "</p>";
   htmlContent += "</body></html>";
   sendSmtpEmail.htmlContent = htmlContent;
   sendSmtpEmail.sender = { "name": "SOMOS Experiences", "email": BREVO_SENDER };
   sendSmtpEmail.to = [
-    { "email": CONCTACT_EMAIL, "name": "SOMOS Experiences" }
+    { "email": NEWSLETTER_EMAIL, "name": "SOMOS Experiences" }
   ];
   sendSmtpEmail.params = { "name": data.name, "email": data.email, "message": data.message, "phone": data.phone, "company": data.company };
 
