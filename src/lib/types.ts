@@ -49,3 +49,15 @@ export interface Filter {
   key: string;
   value: string | number;
 }
+
+export interface EmailAddress {
+  email: string;
+  name: string;
+}
+
+export interface MailMessage {
+  to: EmailAddress[];
+  from?: EmailAddress;
+  subject: string;
+  message: string;
+}

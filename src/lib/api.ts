@@ -1,7 +1,11 @@
+import { TransactionalEmailsApi, TransactionalEmailsApiApiKeys, SendSmtpEmail } from "@getbrevo/brevo";
 import { apiFetch } from "./fetchClient";
-import type { Project, Category, CriteriaBuilder, Award, Company, Filter } from "./types";
+import type { Project, Category, CriteriaBuilder, Award, Company, Filter, MailMessage } from "./types";
 
 const BASE_IMAGE_URL = import.meta.env.BASE_IMAGE_URL;
+const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
+const BREVO_SENDER = import.meta.env.BREVO_SENDER ?? 'digital@somosexperiences.com';
+const NEWSLETTER_EMAIL = import.meta.env.NEWSLETTER_EMAIL ?? 'digital@somosexperiences.com';
 const PROJECTS_CATEGORY_ID = 1;
 const TTL = 1200;
 const projectsCache = new Map();
@@ -168,4 +172,33 @@ export const getCompanies = async (): Promise<Company[]> => {
     console.error("Error fetching companies", error);
     return [];
   }
+}
+
+
+export const sendEmail = (content: MailMessage): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    if (!BREVO_API_KEY) {
+      return reject(new Response(JSON.stringify({ error: 'BREVO_API_KEY not configured' }), { status: 500 }));
+    }
+
+    let apiInstance = new TransactionalEmailsApi();
+    apiInstance.setApiKey(TransactionalEmailsApiApiKeys.apiKey, BREVO_API_KEY);
+    let sendSmtpEmail = new SendSmtpEmail();
+
+    if (!content.from) {
+      content.from = { name: "SOMOS Experiences", email: BREVO_SENDER };
+    }
+
+    sendSmtpEmail.subject = content.subject;
+    sendSmtpEmail.htmlContent = content.message;
+    sendSmtpEmail.sender = { "name": content.from.name, "email": content.from.email };
+    sendSmtpEmail.to = content.to.map((to) => ({ "email": to.email, "name": to.name }));
+
+    apiInstance.sendTransacEmail(sendSmtpEmail)
+      .then(function (data) {
+        resolve(data);
+      }, function (error) {
+        reject(error);
+      });
+  })
 }
