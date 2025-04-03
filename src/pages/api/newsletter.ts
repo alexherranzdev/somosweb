@@ -6,6 +6,7 @@ const NEWSLETTER_EMAIL = import.meta.env.NEWSLETTER_EMAIL ?? 'digital@somosexper
 const MAILCHIMP_SERVER_PREFIX = import.meta.env.MAILCHIMP_SERVER_PREFIX ?? '481cb616dd8511324d1fbf075606cab5';
 const AUDIENCE_ID = import.meta.env.MAILCHIMP_LIST_ID ?? '1d6553a9cd';
 const MAILCHIMP_API_KEY = import.meta.env.MAILCHIMP_API_KEY ?? '481cb616dd8511324d1fbf075606cab5-us20';
+const MAILCHIMP_TAGS = import.meta.env.MAILCHIMP_TAGS ?? 'somosweb-newsletter';
 
 const sendNewsletterEmail = (email: string) => {
   let message = "<html><body>";
@@ -90,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  subscribeToMailchimpList(data.email, ['somosweb-newsletter']);
+  subscribeToMailchimpList(data.email, [MAILCHIMP_TAGS]);
   sendNewsletterEmail(data.email);
 
   return new Response(

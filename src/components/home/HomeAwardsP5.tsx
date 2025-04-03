@@ -41,7 +41,7 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
         rotationAngle: number;
         rotationSpeed: number;
         name: string;
-  
+
         constructor(p: any, x: number, y: number, width: number, e: Ball[], img: any, name: string) {
           this.id = e.length;
           this.width = width;
@@ -60,19 +60,19 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
           this.rotationAngle = p.random(p.TWO_PI);
           this.rotationSpeed = p.random(-0.001, 0.001);
         }
-  
+
         collide(p: any) {
           for (let i = this.id + 1; i < this.e.length; i++) {
             let dx = this.e[i].position.x - this.position.x;
             let dy = this.e[i].position.y - this.position.y;
             let distance = p.sqrt(dx * dx + dy * dy);
             let minDist = this.e[i].width / 2 + this.width / 2;
-  
+
             if (distance <= minDist) {
               let angle = p.atan2(dy, dx);
               let targetX = this.position.x + p.cos(angle) * minDist;
               let targetY = this.position.y + p.sin(angle) * minDist;
-  
+
               this.acceleration.set(
                 (targetX - this.e[i].position.x) * this.spring,
                 (targetY - this.e[i].position.y) * this.spring
@@ -83,13 +83,13 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
             }
           }
         }
-  
+
         move(p: any) {
           this.velocity.add(p.createVector(0, this.gravity));
           this.position.add(this.velocity);
           this.rotationAngle += this.rotationSpeed;
         }
-  
+
         checkBoxCollisions(p: any) {
           if (this.position.x > p.width - this.width / 2) {
             this.velocity.x *= -this.friction;
@@ -98,7 +98,7 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
             this.velocity.x *= -this.friction;
             this.position.x = this.width / 2;
           }
-  
+
           if (this.position.y > p.height - this.width / 2) {
             this.velocity.x -= this.velocity.x / 100;
             this.velocity.y *= -this.friction;
@@ -108,7 +108,7 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
             this.position.y = this.width / 2;
           }
         }
-  
+
         display(p: any) {
           p.noStroke();
           p.imageMode(p.CENTER);
@@ -130,7 +130,7 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
           }
           p.pop();
         }
-  
+
         isClicked(p: any) {
           const d = p.dist(p.mouseX, p.mouseY, this.position.x, this.position.y);
           if (d < this.width / 2) {
@@ -151,7 +151,7 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
 
         p.setup = () => {
           p.createCanvas(window.innerWidth - 20, height);
-          
+
           awards.forEach((award, index) => {
             const image = awardImages[index]
             const width = p.random(30, 200)
@@ -179,13 +179,15 @@ export default function HomeAwardsP5({ awards }: HomeAwardsP5Props) {
             balls.push(newBall);
           })
 
-          balls[0].open = true
-          handleClickAward(awards[0])
+          if (balls[0]) {
+            balls[0].open = true
+            handleClickAward(awards[0])
+          }
         }
 
         p.draw = () => {
           p.background(background);
-          
+
           balls.forEach(ball => {
             ball.move(p);
             ball.checkBoxCollisions(p);
