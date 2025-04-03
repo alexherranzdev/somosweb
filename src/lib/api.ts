@@ -2,6 +2,7 @@ import { TransactionalEmailsApi, TransactionalEmailsApiApiKeys, SendSmtpEmail } 
 import { apiFetch } from "./fetchClient";
 import type { Project, Category, CriteriaBuilder, Award, Company, Filter, MailMessage } from "./types";
 
+const BASE_URL = import.meta.env.SITE || 'http://localhost:4321';
 const BASE_IMAGE_URL = import.meta.env.BASE_IMAGE_URL;
 const BREVO_API_KEY = import.meta.env.BREVO_API_KEY;
 const BREVO_SENDER = import.meta.env.BREVO_SENDER ?? 'digital@somosexperiences.com';
@@ -154,7 +155,7 @@ export const getCategories = async (): Promise<Category[]> => {
 
 export const getAwards = async (): Promise<Award[]> => {
   try {
-    const response = await fetch('http://localhost:4321/api/awards')
+    const response = await fetch(`${BASE_URL}/api/awards`, { method: 'GET' })
     const data = await response.json()
     return data
   } catch (error) {
@@ -165,7 +166,7 @@ export const getAwards = async (): Promise<Award[]> => {
 
 export const getCompanies = async (): Promise<Company[]> => {
   try {
-    const response = await fetch('http://localhost:4321/api/companies')
+    const response = await fetch(`${BASE_URL}/api/companies`)
     const data = await response.json()
     return data
   } catch (error) {

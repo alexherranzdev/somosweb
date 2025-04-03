@@ -1,6 +1,5 @@
 'use client'
 
-import AwardButton from "@components/AwardButton";
 import SectionTitle from "@components/SectionTitle";
 import type { Award } from "@lib/types"
 import { useRef, useEffect, useState } from "react"
